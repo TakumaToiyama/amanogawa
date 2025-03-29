@@ -81,6 +81,7 @@ public class ObjectManager : MonoBehaviour
     public void addCountTouch() {
         scoreManager.addScore();
         countTouch++;
+        Debug.Log("work");
     }
 
 
