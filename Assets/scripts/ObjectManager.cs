@@ -30,7 +30,7 @@ public class ObjectManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        crash();
+        isCrash();
     }
 
     // set the object except safty area
@@ -61,7 +61,7 @@ public class ObjectManager : MonoBehaviour
             }
     }
 
-     public void crash() {
+     public Boolean isCrash() {
         
         float nowX = boatObject.GetPositioX();
         float nowY = boatObject.GetPositioY();
@@ -73,15 +73,17 @@ public class ObjectManager : MonoBehaviour
 
             if (CloneX -1 < nowX && nowX < CloneX +1 && CloneY == nowY && touchTrue[i]) {
                 Debug.Log("crash");
+                boatObject.crash();
                 touchTrue[i] = false;
+                return true;
             }
         }
+        return false;
     }
 
     public void addCountTouch() {
         scoreManager.addScore();
         countTouch++;
-        Debug.Log("work");
     }
 
 
