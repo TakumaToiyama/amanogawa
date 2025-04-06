@@ -62,68 +62,6 @@ public class boat : MonoBehaviour
         }
         gameOver();
 
-
-        // moving boat at a constant speed
-        // currentBoat.transform.position += Vector3.right * speed * Time.deltaTime * 60;
-
-        
-        // Debug.Log("refSpeed: " + refSpeed + " speed: " + speed);
-
-        // change speed when touch the wall
-
-        // if (currentBoat.transform.position.x >= 79 && speed >= 0) {
-        //     if (speed != 0) {
-        //         refSpeed = -refSpeed;
-        //     }
-
-            
-        //     // if boat touch wall && cowntDown isnt 0, boat speed will 0
-        //     if (countDownManager.getGoRun()) {
-        //         speed =refSpeed;
-
-        //         countDownManager.setGoRun();
-        //     } else {
-        //         speed = 0;
-        //     }
-
-            
-
-        //     if (touchCheck) {
-        //         objectManager.addCountTouch();
-        //         touchCheck = false;
-        //         objectManager.randomPosition();
-        //     }
-
-        // } else if (currentBoat.transform.position.x <= -79 && speed <= 0) {
-        //     if (speed != 0) {
-        //         refSpeed = -refSpeed;
-        //     }
-
-        //     // if boat touch wall && cowntDown isnt 0, boat speed will 0
-        //     if (countDownManager.getGoRun()) {
-        //         speed =refSpeed;
-        //         countDownManager.setGoRun();
-        //     } else {
-        //         speed = 0;
-        //     }
-
-        //     if (!touchCheck) {
-        //         objectManager.addCountTouch();
-        //         touchCheck = true;
-        //         objectManager.randomPosition();
-        //     }
-        // }
-   
-        // change the lane when key pushed
-        // if (Input.GetKeyDown(KeyCode.UpArrow) && currentBoat.transform.position.y < 7.5f) {
-        //     currentBoat.transform.Translate(Vector3.up * 5);
-
-        // }
-        // if (Input.GetKeyDown(KeyCode.DownArrow) && currentBoat.transform.position.y > -7.5f) {
-        //     currentBoat.transform.Translate(Vector3.down * 5);
-        // }
-
-
         currentPosition = currentBoat.transform.position;
 
         
@@ -227,7 +165,6 @@ public class boat : MonoBehaviour
         }
         return false;
     }
-
 
 
     // helper methods
