@@ -9,11 +9,9 @@ public class ObjectManager : MonoBehaviour
     private List<GameObject> starClones = new List<GameObject>();
     public LaneManager laneManager;
     public boat boatObject;
-    public ScoreManager scoreManager;
     Boolean[] touchTrue;
     public int numOfSaftyArea;
     public int difficulty;
-    int countTouch = 0;
 
     void Start()
     {
@@ -80,11 +78,5 @@ public class ObjectManager : MonoBehaviour
         }
         return false;
     }
-
-    public void addCountTouch() {
-        scoreManager.addScore();
-        countTouch++;
-    }
-
 
 }

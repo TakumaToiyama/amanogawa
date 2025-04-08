@@ -9,6 +9,7 @@ using UnityEngine;
         idle, // waiting start
         moving, // moving constant speed
         crash, // crash and penalty
+        boost,
         waitNextRound, // waiting when countdown is 0
         gameOver // twice if countdown is 0 but boat doesnt touch wall 
     }
@@ -24,11 +25,8 @@ public class boat : MonoBehaviour
     public camera cameraObj;
     private Vector3 currentPosition;
     public ObjectManager objectManager;
-    public CountDownManager countDownManager;
+    public UIManager uIManager;
     Boolean nowCrash = false;
-    Boolean touchCheck = true; // dont count more than nessesary 
-
-
 
     void Start()
     {
@@ -42,7 +40,8 @@ public class boat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
+        // Debug.Log("speed: " + speed + " refSpeed: " + refSpeed);
         // if (GameManager.Instance.currentState != GameState.play) return;
         switch (currentState) {
             case boatState.idle:
@@ -102,9 +101,10 @@ public class boat : MonoBehaviour
 
     public void isTouch() {
         if ((currentBoat.transform.position.x >= 79 && speed > 0) || (currentBoat.transform.position.x <= -79 && speed < 0)) {
-            objectManager.addCountTouch();
-            objectManager.randomPosition();
+            uIManager.addScore();
 
+            objectManager.randomPosition();
+            changeSpeed();
             changeState(boatState.waitNextRound);
         }
     }
@@ -130,7 +130,11 @@ public class boat : MonoBehaviour
     // change speed when boat collision stars
     private IEnumerator setSpeedCrash() {
         // crash penalty
-        speed = speed/4;
+        if (speed > 0) {
+            speed = 0.03f;
+        } else {
+            speed = -0.03f;
+        }
 
         // wait 3 seconds
         yield return new WaitForSeconds(3);
@@ -141,29 +145,40 @@ public class boat : MonoBehaviour
     }
 
     public void readyNextRound() {
+        keyPress();
         if (speed != 0) {
             refSpeed = -refSpeed;
         }
 
         
         // if boat touch wall && cowntDown isnt 0, boat speed will 0
-        if (countDownManager.getGoRun()) {
+        if (uIManager.getGoRun()) {
             speed =refSpeed;
-            countDownManager.setGoRun();
+            uIManager.setGoRun();
             changeState(boatState.moving);
         } else {
             speed = 0;
         }
     }
     public Boolean gameOver() {
-        if (currentPosition.x < 79 && currentPosition.x > -79 && countDownManager.getGoRun()) {
-            countDownManager.setGameOver();
+        if (currentPosition.x < 79 && currentPosition.x > -79 && uIManager.getGoRun()) {
+            uIManager.setGameOver();
             Debug.Log("work set gameover");
             speed = 0;
             changeState(boatState.gameOver);
             return true;
         }
         return false;
+    }
+
+    public void changeSpeed() {
+        if (uIManager.getScore() % 5 == 0) {
+            if (refSpeed > 0) {
+                refSpeed += 0.1f;
+            } else {
+                refSpeed -= 0.1f;
+            }
+        }
     }
 
 
@@ -177,6 +192,10 @@ public class boat : MonoBehaviour
     }
     public float GetPositioY() {
         return currentPosition.y;
+    }
+
+    public float getRefSpeed() {
+        return refSpeed;
     }
 
 
